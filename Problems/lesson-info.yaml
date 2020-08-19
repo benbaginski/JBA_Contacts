@@ -1,0 +1,34 @@
+content:
+- Currencies
+- Danger levels
+- Robot control
+- IntBinaryOperation
+- Users and WebSites
+- Shape hierarchy
+- The first day of a month or not
+- The first and the last day of a month
+- Print dates of a year with an offset
+- Seconds since start of a day
+- Some hours and minutes ago
+- Seconds between two time points
+- Subtracting hours and adding minutes
+- Merging date-time instances
+- Whole hours between two date-time pairs
+- Who is who
+- Counting 2D shapes
+- Sum of the areas
+- Motor static factory
+- Clock factory
+- Static factory methods for Time
+- Stock Broker
+- Forex Broker
+- Undo command
+- Remote Controller
+- Robot
+- Robot factory
+- Burger store
+- Template Method
+- Template Method (1)
+- Laptop factory
+- Burgers
+- Phone factory

@@ -1,31 +1,31 @@
 package contacts;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Contact {
-    private String firstName;
-    private String lastName;
+
+    private LocalDateTime created;
+    private LocalDateTime lastEdit;
     private String phoneNumber;
 
-    public String getFirstName() {
-        return firstName;
+    //Getters & Setters
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
-    public String getLastName() {
-        return lastName;
+    public LocalDateTime getLastEdit() {
+        return lastEdit;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public boolean hasNumber() {
-        return phoneNumber.compareTo("") != 0;
+    public void setLastEdit() {
+        this.lastEdit = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
     }
 
     public String getPhoneNumber() {
@@ -40,10 +40,27 @@ public class Contact {
         }
     }
 
+    //Constructors
+    public Contact(String phoneNumber) {
+        setPhoneNumber(phoneNumber);
+        this.created = LocalDateTime.now();
+        setLastEdit();
+    }
+
+    public Contact() {
+        this.created = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+        setLastEdit();
+    }
+
+    //Methods
+    public boolean hasNumber() {
+        return phoneNumber.compareTo("") != 0;
+    }
+
     private boolean isValidPhoneNumber(String phoneNumber) {
-        //Group 1 has parens
+        //Number Group 1 has parens
         Pattern pattern = Pattern.compile("^(\\+)?(\\(\\w+\\))([ -]\\w{2,})*$");
-        //Group 2 has parens
+        //Number Group 2 has parens
         Pattern pattern2 = Pattern.compile("^(\\+)?(\\w+)([ -]\\(\\w{2,}\\))([ -]\\w{2,})*$");
         //No paren groups
         Pattern pattern3 = Pattern.compile("^(\\+)?(\\w+)([ -]\\w{2,})*$");
@@ -55,15 +72,12 @@ public class Contact {
         return matcher.find() ^ matcher2.find() ^ matcher3.find();
     }
 
-    public Contact(String firstName, String lastName, String phoneNumber) {
-        setLastName(lastName);
-        setFirstName(firstName);
-        setPhoneNumber(phoneNumber);
+    public String returnName() {
+        return "";
     }
 
-    public String toString() {
-        return getFirstName() + " " + getLastName() + ", " + getPhoneNumber();
-    }
+    public void edit() {
 
+    }
 
 }

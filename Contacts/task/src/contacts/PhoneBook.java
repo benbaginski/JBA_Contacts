@@ -7,15 +7,22 @@ public class PhoneBook {
     ArrayList<Contact> contactList = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 
+    PersonFactory personFactory = new PersonFactory();
+    OrganizationFactory organizationFactory = new OrganizationFactory();
+
     public void add() {
-        System.out.print("Enter the name: ");
-        String firstName = scanner.nextLine();
-        System.out.print("Enter the surname: ");
-        String lastName = scanner.nextLine();
-        System.out.print("Enter the number: ");
-        String phoneNumber = scanner.nextLine();
-        contactList.add(new Contact(firstName, lastName, phoneNumber));
-        System.out.println("The record added.");
+        System.out.print("Enter the type (person, organization): ");
+        switch (scanner.nextLine().strip()) {
+            case "person":
+                contactList.add(personFactory.createContact());
+                break;
+            case "organization":
+                contactList.add(organizationFactory.createContact());
+                break;
+            default:
+                System.out.println("Invalid contact type");
+                break;
+        }
     }
 
     public void remove() {
@@ -39,31 +46,12 @@ public class PhoneBook {
             System.out.println("No records to edit!");
             return;
         }
-
         list();
         System.out.print("Select a record: ");
         int index = scanner.nextInt();
         scanner.nextLine();
-
-        System.out.print("Select a field (name, surname, number): ");
-        String editField = scanner.nextLine();
-
-        switch (editField) {
-            case "name":
-                System.out.print("Enter name: ");
-                contactList.get(index - 1).setFirstName(scanner.nextLine());
-                break;
-            case "surname":
-                System.out.print("Enter surname: ");
-                contactList.get(index - 1).setLastName(scanner.nextLine());
-                break;
-            case "number":
-                System.out.print("Enter number: ");
-                contactList.get(index - 1).setPhoneNumber(scanner.nextLine());
-                break;
-            default:
-                System.out.println("Invalid Field!");
-        }
+        contactList.get(index - 1).edit();
+        System.out.println("The record updated!");
     }
 
     public void count() {
@@ -75,8 +63,21 @@ public class PhoneBook {
             System.out.println("No records to list!");
         } else {
             for (int i = 0; i < contactList.size(); i++) {
-                System.out.println(i + 1 + ". " + contactList.get(i));
+                System.out.println(i + 1 + ". " + contactList.get(i).returnName());
             }
         }
     }
+
+    public void info() {
+        if (contactList.size() <= 0) {
+            System.out.print("No records to edit!");
+            return;
+        }
+        list();
+        System.out.print("Select index to show info: ");
+        int index = scanner.nextInt() - 1;
+        scanner.nextLine();
+        System.out.println(contactList.get(index).toString());
+    }
 }
+
