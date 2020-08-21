@@ -90,6 +90,8 @@ class RobotDemo {
 
         String nameCleaner = scanner.nextLine();
 
+        Integer.parseInt()
+
         Robot robotCleaner = robotFactory.
                 getRobot(
                         RobotType.ROBOT_CLEANER,

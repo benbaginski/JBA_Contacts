@@ -1,11 +1,14 @@
 package contacts;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Contact {
+public abstract class Contact implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private LocalDateTime created;
     private LocalDateTime lastEdit;
@@ -52,7 +55,7 @@ public class Contact {
         setLastEdit();
     }
 
-    //Methods
+    //Concrete Methods
     public boolean hasNumber() {
         return phoneNumber.compareTo("") != 0;
     }
@@ -72,12 +75,16 @@ public class Contact {
         return matcher.find() ^ matcher2.find() ^ matcher3.find();
     }
 
-    public String returnName() {
-        return "";
-    }
+    //Abstract Methods
+    abstract void edit();
 
-    public void edit() {
+    abstract void editField(String field, String newValue);
 
-    }
+    abstract String getFieldValue(String field);
 
+    abstract String getFullName();
+
+    abstract String contactFields();
+
+    abstract String allFieldsConcat();
 }

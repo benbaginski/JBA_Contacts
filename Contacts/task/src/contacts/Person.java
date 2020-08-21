@@ -15,18 +15,20 @@ public class Person extends Contact {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public Person setFirstName(String firstName) {
         this.firstName = firstName;
         setLastEdit();
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public Person setLastName(String lastName) {
         this.lastName = lastName;
         setLastEdit();
+        return this;
     }
 
     public String getGender() {
@@ -45,29 +47,23 @@ public class Person extends Contact {
         else return birthDate.toString();
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public Person setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
         setLastEdit();
+        return this;
     }
 
-    public void setBirthdate(String birthdate) {
+    public Person setBirthdate(String birthdate) {
         try {
             setBirthDate(LocalDate.parse(birthdate));
         } catch (Exception e) {
             this.birthDate = null;
             System.out.println("Bad birth date!");
         }
+        return this;
     }
 
-    //Constructor
-    public Person(String firstName, String lastName, String gender, String birthDate, String phoneNumber) {
-        super(phoneNumber);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        setBirthdate(birthDate);
-    }
-
+    //Constructor(s)
     public Person() {
         super();
     }
@@ -84,39 +80,68 @@ public class Person extends Contact {
     }
 
     @Override
-    public String returnName() {
+    public String getFullName() {
         return firstName + " " + lastName;
     }
 
     @Override
     public void edit() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Select a field (name, surname, birth, gender, number): ");
+        System.out.print("Select a field (" + contactFields() + "):");
         String editField = scanner.nextLine();
+        System.out.print("Enter " + editField + ": ");
+        String newValue = scanner.nextLine();
+        editField(editField, newValue);
+    }
 
-        switch (editField) {
+    @Override
+    void editField(String field, String newValue) {
+        switch (field) {
             case "name":
-                System.out.print("Enter name: ");
-                setFirstName(scanner.nextLine());
+                setFirstName(newValue);
                 break;
             case "surname":
-                System.out.print("Enter surname: ");
-                setLastName(scanner.nextLine());
+                setLastName(newValue);
                 break;
-            case "birth":
-                System.out.print("Enter birthdate: ");
-                setBirthdate(scanner.nextLine());
+            case "birthdate":
+                setBirthdate(newValue);
                 break;
             case "gender":
-                System.out.print("Enter gender: ");
-                setGender(scanner.nextLine());
+                setGender(newValue);
                 break;
             case "number":
-                System.out.print("Enter number: ");
-                setPhoneNumber(scanner.nextLine());
+                setPhoneNumber(newValue);
                 break;
             default:
-                System.out.println("Invalid Field!");
+                System.out.println("Invalid field");
         }
+    }
+
+    @Override
+    String getFieldValue(String field) {
+        switch (field) {
+            case "name":
+                return getFirstName();
+            case "surname":
+                return getLastName();
+            case "birthdate":
+                return getBirthDate();
+            case "gender":
+                return getGender();
+            case "number":
+                return getPhoneNumber();
+            default:
+                return "Invalid field";
+        }
+    }
+
+    @Override
+    public String contactFields() {
+        return "name, surname, birthdate, gender, number";
+    }
+
+    @Override
+    String allFieldsConcat() {
+        return getFirstName()+getLastName()+getBirthDate()+getGender()+getPhoneNumber();
     }
 }

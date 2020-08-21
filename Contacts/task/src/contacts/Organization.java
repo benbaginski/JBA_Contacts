@@ -12,27 +12,23 @@ public class Organization extends Contact {
         return address;
     }
 
-    public void setAddress(String address) {
+    public Organization setAddress(String address) {
         this.address = address;
         setLastEdit();
+        return this;
     }
 
     public String getOrgName() {
         return orgName;
     }
 
-    public void setOrgName(String orgName) {
+    public Organization setOrgName(String orgName) {
         this.orgName = orgName;
         setLastEdit();
+        return this;
     }
 
-    //Constructors
-    public Organization(String orgName, String address, String number) {
-        super(number);
-        this.address = address;
-        this.orgName = orgName;
-    }
-
+    //Constructor(s)
     public Organization() {
         super();
     }
@@ -47,28 +43,58 @@ public class Organization extends Contact {
     }
 
     @Override
-    public String returnName() {
+    public String getFullName() {
         return orgName;
+    }
+
+    @Override
+    public String contactFields() {
+        return "name, address, number";
     }
 
     @Override
     public void edit() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Select a field (Organization, address, number): ");
+        System.out.print("Select a field (" + contactFields() + "): ");
         String editField = scanner.nextLine();
+        System.out.print("Enter " + editField + ": ");
+        String newValue = scanner.nextLine();
+        editField(editField, newValue);
+    }
 
-        switch (editField) {
-            case "organization":
-                setOrgName(scanner.nextLine());
+    @Override
+    void editField(String field, String newValue) {
+        switch (field) {
+            case "name":
+                setOrgName(newValue);
                 break;
             case "address":
-                setAddress(scanner.nextLine());
+                setAddress(newValue);
                 break;
             case "number":
-                setPhoneNumber(scanner.nextLine());
+                setPhoneNumber(newValue);
                 break;
             default:
                 System.out.println("Invalid field!");
         }
+    }
+
+    @Override
+    String getFieldValue(String field) {
+        switch (field) {
+            case "name":
+                return getOrgName();
+            case "address":
+                return getAddress();
+            case "number":
+                return getPhoneNumber();
+            default:
+                return "Invalid field";
+        }
+    }
+
+    @Override
+    String allFieldsConcat() {
+        return getOrgName() + getAddress() + getPhoneNumber();
     }
 }

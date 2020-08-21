@@ -3,8 +3,15 @@ package contacts;
 public class Main {
 
     public static void main(String[] args) {
-        PhoneBook phoneBook = new PhoneBook();
-        UserInterface userInterface = new UserInterface(phoneBook);
-        userInterface.dialogPrompt();
+        String phoneBookFile;
+        PhoneBook phoneBook;
+        try {
+            phoneBookFile = args[0];
+            phoneBook = new PhoneBook(phoneBookFile);
+        } catch (IndexOutOfBoundsException e) {
+            phoneBook = new PhoneBook();
+        }
+
+        new UserInterface(phoneBook);
     }
 }
